@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - File Sharing System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/user.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="static/Photos/lOGO.png" alt="Logo">
+                <span>My Files</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active">
+                    <i class="fas fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li>
+                    <i class="fas fa-share-from-square"></i>
+                    <span>Shared with Me</span>
+                </li>
+                <li>
+                    <i class="fas fa-bell"></i>
+                    <span>Notification</span>
+                </li>
+                <li>
+                    <i class="fas fa-star"></i>
+                    <span>Favorites</span>
+                </li>
+                <li>
+                    <i class="fas fa-trash"></i>
+                    <span>Trash</span>
+                </li>
+            </ul>
+            
+            <div class="logout-section">
+                <button class="logout-btn" onclick="logoutUser()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="welcome-section">
+                <h1>Welcome back, Users! 👋</h1>
+                <p>Manage and share your files securely from anywhere.</p>
+            </div>
+
+            <div class="header">
+                <div class="search-wrapper">
+                    <input type="text" class="search-bar" placeholder="Search your files...">
+                </div>
+                <div class="user-actions">
+                    <button id="uploadBtn" class="btn primary" onclick="openUploadModal()">
+                        <i class="fas fa-upload"></i> Upload File
+                    </button>
+                </div>
+            </div>
+
+            <div class="quick-access">
+                <h2>Quick Access</h2>
+                <div class="quick-access-grid">
+                    <div class="quick-access-item" onclick="handleQuickAccessClick('documents')">
+                        <div class="icon-wrapper documents">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <span>Documents</span>
+                    </div>
+                    <div class="quick-access-item" onclick="handleQuickAccessClick('images')">
+                        <div class="icon-wrapper images">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <span>Images</span>
+                    </div>
+                    <div class="quick-access-item" onclick="handleQuickAccessClick('videos')">
+                        <div class="icon-wrapper videos">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <span>Videos</span>
+                    </div>
+                    <div class="quick-access-item" onclick="handleQuickAccessClick('my-shares')">
+                        <div class="icon-wrapper my-shares">
+                            <i class="fas fa-share-nodes"></i>
+                        </div>
+                        <span>My Shares</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-files">
+                <div class="section-header">
+                    <h2>Recent Files</h2>
+                    <select id="filterType" class="btn secondary" onchange="filterFiles(this.value)">
+                        <option value="all">All Files</option>
+                        <option value="documents">Documents</option>
+                        <option value="images">Images</option>
+                        <option value="videos">Videos</option>
+                    </select>
+                </div>
+                <div class="files-grid" id="filesGrid">
+                    <!-- Files will be dynamically populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <h2>Upload File</h2>
+            <form id="uploadForm" onsubmit="uploadFile(event)" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fileInput">Select File:</label>
+                    <input type="file" id="fileInput" name="file" required onchange="previewUploadFile(event)"> 
+                </div>
+                <div id="uploadFilePreview" class="upload-file-preview hidden">
+                    <!-- File preview will be dynamically inserted here -->
+                </div>
+                <div class="form-group">
+                    <label for="fileDescription">Description (optional):</label>
+                    <textarea id="fileDescription" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="shareWith">Share with Department:</label>
+                    <select id="shareWith" name="shareWith" class="form-control">
+                        <option value="">Select Department</option>
+                        <option value="it">IT Department</option>
+                        <option value="finance">Finance Department</option>
+                        <option value="cybersecurity">Cybersecurity Department</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filePassword">Password Protection (optional):</label>
+                    <input type="password" id="filePassword" name="filePassword" placeholder="Leave empty for no password">
+                    <small class="form-text text-muted">Users will need this password to download the file</small>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isPrivate" name="isPrivate">
+                        Keep file private
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" id="cancelUpload">Cancel</button>
+                    <button type="submit" class="btn primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- File Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content preview-modal-content">
+            <div class="preview-header">
+                <h2 id="previewFileName">File Preview</h2>
+                <div class="preview-actions">
+                    <button id="downloadPreviewBtn" class="btn secondary">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button id="closePreviewBtn" class="btn secondary">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div class="preview-container">
+                <!-- Preview content will be loaded here -->
+                <div id="previewLoader" class="preview-loader">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading preview...</p>
+                </div>
+                <div id="previewContent" class="preview-content">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+                <div id="previewError" class="preview-error hidden">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Preview not available for this file type.</p>
+                    <button class="btn primary" id="downloadInsteadBtn">Download Instead</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/user.js"></script>
+</body>
+</html>

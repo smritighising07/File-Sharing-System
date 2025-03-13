@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Secure File Sharing System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/admin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="static/Photos/lOGO.png" alt="Logo">
+                <span>SecureFile</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active">
+                    <a href="#">
+                        <i class="fas fa-th-large nav-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-alt nav-icon"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-chart-bar nav-icon"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-history nav-icon"></i>
+                        <span>Activities</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-cog nav-icon"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="logout-section">
+                <a href="#" class="btn danger" style="width: 100%;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Welcome Message -->
+            <div class="welcome-card">
+                <div class="decoration"></div>
+                <div class="decoration"></div>
+                <h1>Welcome to SecureFile Admin Dashboard</h1>
+                <p>Manage your file sharing system with ease. Monitor storage, users, and file activity from this central dashboard. Stay updated with the latest system statistics and user activities.</p>
+            </div>
+
+            <!-- Header with Search and User Profile -->
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Search files, users or activities...">
+                </div>
+                
+                <div class="user-actions">
+                    <button id="addFileBtn" class="btn primary">
+                        <i class="fas fa-plus"></i>
+                        <span>Add File</span>
+                    </button>
+                    
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Total Files</h3>
+                        <div class="card-icon files-icon">
+                            <i class="fas fa-file"></i>
+                        </div>
+                    </div>
+                    <p id="totalFiles"></p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Active Users</h3>
+                        <div class="card-icon users-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <p id="activeUsers"></p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Storage Used</h3>
+                        <div class="card-icon storage-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                    </div>
+                    <p id="storageUsed"></p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Shared Files</h3>
+                        <div class="card-icon shared-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                    </div>
+                    <p id="sharedFiles"></p>
+                </div>
+            </div>
+
+            <!-- Files Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>Recent Files</h2>
+                    <div class="table-actions">
+                        <select id="filterType">
+                            <option value="all">All Files</option>
+                            <option value="documents">Documents</option>
+                            <option value="images">Images</option>
+                            <option value="videos">Videos</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table id="filesTable">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Size</th>
+                            <th>Type</th>
+                            <th>Uploaded By</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filesList">
+                        <!-- Table content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Activities Section -->
+            <div class="activities-section">
+                <div class="section-header">
+                    <h2>Recent Activities</h2>
+                    <div class="date-filter">
+                        <select id="activityTimeframe">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="activities-list" id="activitiesList">
+                    <!-- Activities will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add File Modal -->
+    <div id="addFileModal" class="modal">
+        <div class="modal-content">
+            <h2>Upload New File</h2>
+            <form id="fileUploadForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fileInput">Select File:</label>
+                    <input type="file" id="fileInput" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label for="fileDescription">Description:</label>
+                    <textarea id="fileDescription" name="description" rows="3" placeholder="Enter file description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="expirationDate">Expiration Date (Optional):</label>
+                    <input type="datetime-local" id="expirationDate" name="expiration_date">
+                </div>
+                <div class="form-group">
+                    <label>Share with Departments:</label>
+                    <div id="shareDepartments" class="checkbox-group">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" id="cancelUpload">Cancel</button>
+                    <button type="submit" class="btn primary">Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button id="closeNotifications" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+        <div class="notification-footer">
+            <button id="markAllRead" class="btn secondary">Mark All as Read</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <p id="toastMessage"></p>
+        </div>
+    </div>
+
+    <script src="static/admin.js"></script>
+</body>
+</html>

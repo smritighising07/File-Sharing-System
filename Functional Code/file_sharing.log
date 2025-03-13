@@ -1,0 +1,56 @@
+2025-03-13 22:57:13,497 - INFO - Redis connection established successfully
+2025-03-13 22:57:14,776 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.4:5000
+2025-03-13 22:57:14,776 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-13 22:57:14,778 - INFO -  * Restarting with stat
+2025-03-13 22:57:15,164 - INFO - Redis connection established successfully
+2025-03-13 22:57:15,188 - WARNING -  * Debugger is active!
+2025-03-13 22:57:15,191 - INFO -  * Debugger PIN: 983-943-852
+2025-03-13 22:57:19,022 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "[32mGET / HTTP/1.1[0m" 302 -
+2025-03-13 22:57:19,066 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "GET /login HTTP/1.1" 200 -
+2025-03-13 22:57:19,192 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "GET /static/script.js HTTP/1.1" 200 -
+2025-03-13 22:57:19,204 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "GET /static/styles.css HTTP/1.1" 200 -
+2025-03-13 22:57:19,217 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "GET /static/Photos/login.png HTTP/1.1" 200 -
+2025-03-13 22:57:19,229 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "GET /static/Photos/background.jpg HTTP/1.1" 200 -
+2025-03-13 22:57:19,769 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-13 22:57:29,477 - INFO - 192.168.1.4 - - [13/Mar/2025 22:57:29] "POST /login HTTP/1.1" 200 -
+2025-03-13 22:58:08,849 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:08] "POST /verify-code HTTP/1.1" 200 -
+2025-03-13 22:58:10,445 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:10] "GET /user_dashboard HTTP/1.1" 200 -
+2025-03-13 22:58:10,454 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:10] "GET /static/user.css HTTP/1.1" 200 -
+2025-03-13 22:58:10,455 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:10] "GET /static/user.js HTTP/1.1" 200 -
+2025-03-13 22:58:10,465 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:10] "GET /static/Photos/lOGO.png HTTP/1.1" 200 -
+2025-03-13 22:58:10,487 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:10] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:58:11,484 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:11] "GET /api/files?search=&type=my-shares HTTP/1.1" 200 -
+2025-03-13 22:58:13,760 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:13] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:58:13,772 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:13] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:58:25,549 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:25] "GET /api/files?search=&type=my-shares HTTP/1.1" 200 -
+2025-03-13 22:58:26,631 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:26] "GET /api/files?search=&type=shared-with-me HTTP/1.1" 200 -
+2025-03-13 22:58:28,827 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:28] "GET /api/files?search=&type=notification HTTP/1.1" 200 -
+2025-03-13 22:58:30,135 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:30] "GET /api/favorites?search= HTTP/1.1" 200 -
+2025-03-13 22:58:32,472 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:32] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:58:42,991 - ERROR - File upload error: 1364 (HY000): Field 'access_password' doesn't have a default value
+2025-03-13 22:58:42,992 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:42] "[35m[1mPOST /api/upload HTTP/1.1[0m" 500 -
+2025-03-13 22:58:55,533 - ERROR - File upload error: 1364 (HY000): Field 'access_password' doesn't have a default value
+2025-03-13 22:58:55,534 - INFO - 192.168.1.4 - - [13/Mar/2025 22:58:55] "[35m[1mPOST /api/upload HTTP/1.1[0m" 500 -
+2025-03-13 22:59:02,719 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:02] "[35m[1mPOST /api/upload HTTP/1.1[0m" 201 -
+2025-03-13 22:59:02,731 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:02] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:59:05,428 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:05] "GET /api/preview/20250313_225902_login_icon.png HTTP/1.1" 200 -
+2025-03-13 22:59:10,656 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:10] "GET /api/files?search=&type=videos HTTP/1.1" 200 -
+2025-03-13 22:59:11,248 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:11] "GET /api/files?search=&type=my-shares HTTP/1.1" 200 -
+2025-03-13 22:59:12,206 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:12] "GET /api/files?search=&type=images HTTP/1.1" 200 -
+2025-03-13 22:59:12,865 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:12] "GET /api/files?search=&type=documents HTTP/1.1" 200 -
+2025-03-13 22:59:14,370 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:14] "GET /api/files?search=&type=shared-with-me HTTP/1.1" 200 -
+2025-03-13 22:59:17,305 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:17] "GET /api/files?search=&type=my-shares HTTP/1.1" 200 -
+2025-03-13 22:59:29,846 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:29] "GET /api/files?search=&type=documents HTTP/1.1" 200 -
+2025-03-13 22:59:29,859 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:29] "GET /api/files?search=&type=documents HTTP/1.1" 200 -
+2025-03-13 22:59:32,003 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:32] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:59:32,016 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:32] "GET /api/files?search=&type=all HTTP/1.1" 200 -
+2025-03-13 22:59:37,729 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:37] "GET /api/files?search=&type=images HTTP/1.1" 200 -
+2025-03-13 22:59:37,740 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:37] "GET /api/files?search=&type=images HTTP/1.1" 200 -
+2025-03-13 22:59:43,830 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:43] "GET /api/favorites?search= HTTP/1.1" 200 -
+2025-03-13 22:59:43,840 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:43] "GET /api/favorites?search= HTTP/1.1" 200 -
+2025-03-13 22:59:46,237 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:46] "GET /api/files?search=&type=my-shares HTTP/1.1" 200 -
+2025-03-13 22:59:52,293 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:52] "GET /api/files?search=&type=videos HTTP/1.1" 200 -
+2025-03-13 22:59:53,354 - INFO - 192.168.1.4 - - [13/Mar/2025 22:59:53] "GET /api/files?search=&type=images HTTP/1.1" 200 -
