@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileShare - Login</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <!-- Add reCAPTCHA API -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="login-container">
+        <div class="illustration">
+            <!-- Correct image path using Flask's url_for -->
+            <img src="{{ url_for('static', filename='Photos/login.png') }}" alt="Analytics Dashboard" class="dashboard-image">
+            <div class="features-list">
+                <h3>FileShare Features:</h3>
+                <ul>
+                    <li>Secure file storage & sharing</li>
+                    <li>User Friendly Dashboard</li>
+                    <li>End-to-end encryption</li>
+                    <li>Team collaboration tools</li>
+                    <li>Multi-factor authentication</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="login-form">
+            <div class="brand">
+                <h2>Secure FileShare</h2>
+            </div>
+            
+            <!-- Password Login Form (Step 1) -->
+            <div id="passwordLoginForm">
+                <h1>Welcome back</h1>
+                <p class="subtitle">Access your secure file storage</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" id="email" required placeholder="name@company.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="password" required>
+                            <button type="button" class="toggle-password" id="togglePassword">Show</button>
+                        </div>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember Me</label>
+                        </div>
+                        <!-- In index.html, this should match the route function name -->
+                        <a href="{{ url_for('forgot_password') }}" class="forgot-password">Forgot Password</a>
+                    </div>
+
+                    <!-- Add reCAPTCHA -->
+                    <div class="captcha-container">
+                        <div class="g-recaptcha" data-sitekey="6Ld8VgwrAAAAAMRBaVdmXhCQjct0q9gDlYKb3xDA"></div>
+                        <div id="captchaError" class="error-message"></div>
+                    </div>
+                    
+                    <button type="submit" class="login-button">Log In</button>
+                </form>
+            </div>
+            
+            <!-- MFA Verification Form (Step 2) -->
+            <div id="mfaVerificationForm" style="display:none;">
+                <h1>Verification Required</h1>
+                <p class="subtitle">Please verify your identity</p>
+                
+                <!-- Email Verification Section -->
+                <div id="emailVerification" class="mfa-method">
+                    <h3>Email Verification</h3>
+                    <p>We've sent a code to your email. Enter it below.</p>
+                    
+                    <form id="emailForm">
+                        <div class="form-group">
+                            <label for="emailCode">Verification Code</label>
+                            <input type="text" id="emailCode" maxlength="6" placeholder="" 
+                                   pattern="[0-9]{6}" required>
+                        </div>
+                        
+                        <button type="submit" class="login-button">Verify</button>
+                        <button type="button" id="resendCode" class="resend-button">Resend Code</button>
+                    </form>
+                </div>
+                
+                <div class="mfa-options">
+                    <a href="#" id="backToLogin">← Back to login</a>
+                </div>
+            </div>
+            
+            <div class="security-note">
+                <small>🔒 Enterprise-grade security. Your files are protected with AES-256 encryption and multi-factor authentication</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript file -->
+    <script src="static/script.js"></script>
+</body>
+</html>

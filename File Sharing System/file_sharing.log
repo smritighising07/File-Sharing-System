@@ -1,0 +1,5 @@
+2025-04-03 20:05:37,943 - INFO - Redis connection established successfully
+2025-04-03 20:05:37,948 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2025-04-03 20:05:37,949 - INFO - Added job "check_expired_files" to job store "default"
+2025-04-03 20:05:37,949 - INFO - Scheduler started
+2025-04-03 20:05:37,950 - INFO - File expiration scheduler started

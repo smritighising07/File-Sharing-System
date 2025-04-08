@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files Management - Secure File Sharing System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Files Management.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='Photos/lOGO.png') }}" alt="Logo">
+                <span>SecureFile</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        <i class="fas fa-th-large nav-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ url_for('admin.files') }}">
+                        <i class="fas fa-file-alt nav-icon"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.users') }}">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.activities') }}">
+                        <i class="fas fa-history nav-icon"></i>
+                        <span>Activities</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="logout-section">
+                <a href="{{ url_for('logout') }}" class="btn danger" style="width: 100%;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Header with Search and User Profile -->
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="fileSearchInput" placeholder="Search files by name, type or description...">
+                </div>
+                
+                <div class="user-actions">
+                    <button id="addFileBtn" class="btn primary">
+                        <i class="fas fa-plus"></i>
+                        <span>Add File</span>
+                    </button>
+                    
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Files Navigation -->
+            <div class="files-navigation">
+                <div class="nav-item active" data-category="all">
+                    <i class="fas fa-folder"></i>
+                    <span>All Files</span>
+                </div>
+                <div class="nav-item" data-category="my-files">
+                    <i class="fas fa-folder-open"></i>
+                    <span>My Files</span>
+                </div>
+                <div class="nav-item" data-category="shared">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Shared Files</span>
+                </div>
+                <div class="nav-item" data-category="favorites">
+                    <i class="fas fa-star"></i>
+                    <span>Favorites</span>
+                </div>
+                <div class="nav-item" data-category="trash">
+                    <i class="fas fa-trash"></i>
+                    <span>Trash</span>
+                </div>
+            </div>
+
+            <!-- Files Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h2 id="currentCategoryTitle">All Files</h2>
+                    <div class="table-actions">
+                        <select id="filterType">
+                            <option value="all">All Types</option>
+                            <option value="documents">Documents</option>
+                            <option value="images">Images</option>
+                            <option value="videos">Videos</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table id="filesTable">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Size</th>
+                            <th>Type</th>
+                            <th>Uploaded By</th>
+                            <th>Shared With</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filesList">
+                        <!-- Table content will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add File Modal -->
+    <div id="addFileModal" class="modal">
+        <div class="modal-content">
+            <h2>Upload New File</h2>
+            <form id="fileUploadForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fileInput">Select File:</label>
+                    <input type="file" id="fileInput" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label for="fileDescription">Description:</label>
+                    <textarea id="fileDescription" name="description" rows="3" placeholder="Enter file description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="expirationEnabled" name="expirationEnabled">
+                        <label class="form-check-label" for="expirationEnabled">Enable file expiration</label>
+                    </div>
+                    <input type="datetime-local" id="expirationDate" name="expirationDateTime" disabled>
+                    <small class="form-text text-muted">After this date, the file will be automatically deleted from the system</small>
+                </div>
+                <div class="form-group">
+                    <label>Share with Departments:</label>
+                    <div id="shareDepartments" class="checkbox-group">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Share with Specific Users:</label>
+                    <div id="shareUsers" class="checkbox-group">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="filePassword">Password Protection:</label>
+                    <input type="password" id="filePassword" name="filePassword" placeholder="Leave empty for no password">
+                    <small class="form-text text-muted">Users will need this password to download the file</small>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="isPrivate" name="isPrivate">
+                        <label class="form-check-label" for="isPrivate">Keep file private</label>
+                        <small class="form-text text-muted">Private files can only be accessed by you</small>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" id="cancelUpload">Cancel</button>
+                    <button type="submit" class="btn primary">Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Share Modal -->
+    <div id="shareFileModal" class="modal">
+        <div class="modal-content">
+            <h2>Share File</h2>
+            <form id="shareFileForm">
+                <input type="hidden" id="shareFileId">
+                <div class="form-group">
+                    <label>Share with Departments:</label>
+                    <div id="shareDepartmentsModal" class="checkbox-group">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Share with Specific Users:</label>
+                    <div id="shareUsersModal" class="checkbox-group">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" id="cancelShare">Cancel</button>
+                    <button type="submit" class="btn primary">Share File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- File Details Modal -->
+    <div id="fileDetailsModal" class="modal">
+        <div class="modal-content">
+            <h2>File Details</h2>
+            <div id="fileDetailsContent">
+                <!-- Will be populated dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" id="closeFileDetails">Close</button>
+                <button type="button" class="btn primary" id="downloadFileDetails">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restore Confirmation Modal -->
+    <div id="restoreFileModal" class="modal">
+        <div class="modal-content">
+            <h2>Restore File</h2>
+            <p>Are you sure you want to restore this file from the trash?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" id="cancelRestore">Cancel</button>
+                <button type="button" class="btn primary" id="confirmRestore">Restore</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteFileModal" class="modal">
+        <div class="modal-content">
+            <h2>Delete File</h2>
+            <p id="deleteFileMessage">Are you sure you want to move this file to trash?</p>
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" id="cancelDelete">Cancel</button>
+                <button type="button" class="btn danger" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button id="closeNotifications" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+        <div class="notification-footer">
+            <button id="markAllRead" class="btn secondary">Mark All as Read</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <p id="toastMessage"></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='Files Management.js') }}"></script>
+</body>
+</html>

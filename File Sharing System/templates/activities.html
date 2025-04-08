@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Logs - Secure File Sharing System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='activities.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='Photos/lOGO.png') }}" alt="Logo">
+                <span>SecureFile</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        <i class="fas fa-th-large nav-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.files') }}">
+                        <i class="fas fa-file-alt nav-icon"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.users') }}">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ url_for('admin.activities') }}">
+                        <i class="fas fa-history nav-icon"></i>
+                        <span>Activities</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="logout-section">
+                <a href="{{ url_for('logout') }}" class="btn danger" style="width: 100%;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Header with Search and User Profile -->
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="activitySearch" placeholder="Search activities...">
+                </div>
+                
+                <div class="user-actions">                    
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <span id="currentUser">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activities Header -->
+            <div class="activities-header">
+                <h1>Activity Logs</h1>
+                <p>Track all system activities including file uploads, downloads, sharing and user actions.</p>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label for="timeRange">Time Range:</label>
+                    <select id="timeRange" class="filter-select">
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="week" selected>Last 7 Days</option>
+                        <option value="month">Last 30 Days</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+
+                <div class="filter-group date-range" id="customDateRange" style="display: none;">
+                    <label for="startDate">From:</label>
+                    <input type="date" id="startDate" class="date-input">
+                    <label for="endDate">To:</label>
+                    <input type="date" id="endDate" class="date-input">
+                    <button id="applyDateRange" class="btn primary">Apply</button>
+                </div>
+
+                <div class="filter-group">
+                    <label for="activityType">Activity Type:</label>
+                    <select id="activityType" class="filter-select">
+                        <option value="all" selected>All Activities</option>
+                        <option value="file_upload">File Uploads</option>
+                        <option value="file_download">File Downloads</option>
+                        <option value="file_share">File Sharing</option>
+                        <option value="login">Login/Logout</option>
+                        <option value="user_management">User Management</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="userFilter">User:</label>
+                    <select id="userFilter" class="filter-select">
+                        <option value="all" selected>All Users</option>
+                        <!-- Will be populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="departmentFilter">Department:</label>
+                    <select id="departmentFilter" class="filter-select">
+                        <option value="all" selected>All Departments</option>
+                        <!-- Will be populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="filter-actions">
+                    <button id="resetFilters" class="btn secondary">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                    <button id="exportActivities" class="btn primary">
+                        <i class="fas fa-file-export"></i> Export
+                    </button>
+                    <!-- New Clear Logs button with danger styling -->
+                    <button id="clearActivities" class="btn danger">
+                        <i class="fas fa-trash-alt"></i> Clear Logs
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activities Table -->
+            <div class="table-container">
+                <table id="activitiesTable">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>User</th>
+                            <th>Department</th>
+                            <th>Activity Type</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activitiesList">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+
+                <!-- Pagination Controls -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        Showing <span id="currentRange">1-10</span> of <span id="totalItems">100</span> activities
+                    </div>
+                    <div class="pagination-controls">
+                        <button id="prevPage" class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div id="pageNumbers" class="page-numbers">
+                            <!-- Page numbers will be populated by JavaScript -->
+                        </div>
+                        <button id="nextPage" class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="modal">
+        <div class="modal-content">
+            <h2>Export Activity Logs</h2>
+            <form id="exportForm">
+                <div class="form-group">
+                    <label for="exportFormat">Format:</label>
+                    <select id="exportFormat" name="format" class="form-select">
+                        <option value="csv">CSV</option>
+                        <option value="pdf">PDF</option>
+                        <option value="json">JSON</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exportDateRange">Date Range:</label>
+                    <select id="exportDateRange" name="dateRange" class="form-select">
+                        <option value="current">Current Selection</option>
+                        <option value="all">All Time</option>
+                        <option value="month">Last 30 Days</option>
+                        <option value="week">Last 7 Days</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="includeIpAddresses" name="includeIpAddresses" checked>
+                        <label class="form-check-label" for="includeIpAddresses">Include IP Addresses</label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" id="cancelExport">Cancel</button>
+                    <button type="submit" class="btn primary">Export</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Activity Detail Modal -->
+    <div id="activityDetailModal" class="modal">
+        <div class="modal-content">
+            <h2>Activity Details</h2>
+            <div class="activity-detail-content">
+                <div class="detail-group">
+                    <label>Activity ID:</label>
+                    <span id="detailActivityId"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Date & Time:</label>
+                    <span id="detailDateTime"></span>
+                </div>
+                <div class="detail-group">
+                    <label>User:</label>
+                    <span id="detailUser"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Department:</label>
+                    <span id="detailDepartment"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Activity Type:</label>
+                    <span id="detailType"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Description:</label>
+                    <span id="detailDescription"></span>
+                </div>
+                <div class="detail-group file-section" id="fileDetailsSection">
+                    <label>File Information:</label>
+                    <div class="file-details">
+                        <div class="file-detail-item">
+                            <strong>Filename:</strong>
+                            <span id="detailFilename"></span>
+                        </div>
+                        <div class="file-detail-item">
+                            <strong>File Size:</strong>
+                            <span id="detailFileSize"></span>
+                        </div>
+                        <div class="file-detail-item">
+                            <strong>File Type:</strong>
+                            <span id="detailFileType"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-group share-section" id="shareDetailsSection">
+                    <label>Share Information:</label>
+                    <div class="share-details">
+                        <div class="share-detail-item">
+                            <strong>Shared With:</strong>
+                            <span id="detailSharedWith"></span>
+                        </div>
+                        <div class="share-detail-item">
+                            <strong>Permissions:</strong>
+                            <span id="detailPermissions"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" id="closeDetailModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Activities Confirmation Modal -->
+    <div id="clearActivitiesModal" class="modal">
+        <div class="modal-content">
+            <h2>Clear Activity Logs</h2>
+            <p>Are you sure you want to clear all activity logs? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button type="button" class="btn secondary" id="cancelClearActivities">Cancel</button>
+                <button type="button" class="btn danger" id="confirmClearActivities">Clear All Logs</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <p id="toastMessage"></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='activities.js') }}"></script>
+</body>
+</html>

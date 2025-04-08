@@ -1,0 +1,559 @@
+/* Activities Page Specific Styles */
+
+/* Activities Header */
+.activities-header {
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.activities-header h1 {
+    margin: 0 0 0.5rem 0;
+    color: #263238;
+    font-size: 1.8rem;
+}
+
+.activities-header p {
+    margin: 0;
+    color: #607d8b;
+    font-size: 0.95rem;
+}
+
+/* Filters Section */
+.filters-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.filter-group label {
+    font-size: 0.85rem;
+    color: #546e7a;
+    margin-bottom: 0.3rem;
+}
+
+.filter-select {
+    padding: 0.5rem;
+    border: 1px solid #cfd8dc;
+    border-radius: 4px;
+    background-color: white;
+    color: #263238;
+    font-size: 0.9rem;
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.date-input {
+    padding: 0.5rem;
+    border: 1px solid #cfd8dc;
+    border-radius: 4px;
+    width: 140px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-left: auto;
+    align-items: flex-end;
+}
+
+/* Activities Table */
+.table-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+#activitiesTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#activitiesTable thead {
+    background-color: #f1f3f5;
+}
+
+#activitiesTable th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #546e7a;
+    border-bottom: 2px solid #eceff1;
+}
+
+#activitiesTable tbody tr {
+    border-bottom: 1px solid #eceff1;
+    transition: background-color 0.2s;
+}
+
+#activitiesTable tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+#activitiesTable td {
+    padding: 1rem;
+    color: #37474f;
+    font-size: 0.95rem;
+}
+
+.activity-type-badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+}
+
+.activity-type-badge.login {
+    background-color: #4caf50;
+}
+
+.activity-type-badge.logout {
+    background-color: #78909c;
+}
+
+.activity-type-badge.file_upload {
+    background-color: #2196f3;
+}
+
+.activity-type-badge.file_download {
+    background-color: #9c27b0;
+}
+
+.activity-type-badge.file_share {
+    background-color: #ff9800;
+}
+
+.activity-type-badge.file_delete {
+    background-color: #f44336;
+}
+
+.activity-type-badge.user_create,
+.activity-type-badge.user_update,
+.activity-type-badge.user_delete {
+    background-color: #607d8b;
+}
+
+.activity-icon {
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+}
+
+/* Pagination */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid #eceff1;
+}
+
+.pagination-info {
+    color: #78909c;
+    font-size: 0.9rem;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-btn {
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #546e7a;
+    transition: all 0.2s;
+}
+
+.pagination-btn:disabled {
+    color: #cfd8dc;
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.pagination-btn:not(:disabled):hover {
+    background-color: #e0e0e0;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.page-number {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #546e7a;
+}
+
+.page-number:hover {
+    background-color: #e0e0e0;
+}
+
+.page-number.active {
+    background-color: #2196f3;
+    color: white;
+}
+
+/* Activity Detail Modal */
+.detail-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-group label {
+    font-size: 0.85rem;
+    color: #78909c;
+    margin-bottom: 0.2rem;
+}
+
+.detail-group span {
+    font-size: 1rem;
+    color: #263238;
+}
+
+.file-details, .share-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.file-detail-item, .share-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.file-section, .share-section {
+    background-color: #f5f7fa;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+/* Export Modal */
+#exportModal .modal-content {
+    max-width: 500px;
+}
+
+/* Toast Animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    animation: slideIn 0.3s forwards;
+}
+
+.toast.hide {
+    animation: slideOut 0.3s forwards;
+}
+
+.toast-icon {
+    margin-right: 0.8rem;
+    color: #4caf50;
+    font-size: 1.2rem;
+}
+
+.toast-icon.error {
+    color: #f44336;
+}
+
+.toast-content p {
+    margin: 0;
+    color: #37474f;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #263238;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-actions {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+    
+    #activitiesTable th:nth-child(3),
+    #activitiesTable td:nth-child(3),
+    #activitiesTable th:nth-child(6),
+    #activitiesTable td:nth-child(6) {
+        display: none; /* Hide department and IP columns on mobile */
+    }
+    
+    .page-numbers {
+        display: none;
+    }
+    
+    .pagination-info {
+        font-size: 0.8rem;
+    }
+}
+/* Add or update the danger button styling */
+.btn.danger {
+    background-color: #f44336;
+    color: white;
+    border: 1px solid #d32f2f;
+}
+
+.btn.danger:hover {
+    background-color: #d32f2f;
+}
+
+.btn.danger:active {
+    background-color: #b71c1c;
+}
+/* You can add this style to make the confirmation text more noticeable */
+#clearActivitiesModal p {
+    color: #d32f2f;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+/* Additional Activity Type Badges Styling */
+
+/* Page View Activities */
+.activity-type-badge.page_view {
+    background-color: #3498db; /* Blue */
+}
+
+/* File View Activities */
+.activity-type-badge.file_view {
+    background-color: #2ecc71; /* Green */
+}
+
+/* Favorites Activities */
+.activity-type-badge.favorite_add,
+.activity-type-badge.favorite_remove,
+.activity-type-badge.viewed_favorites {
+    background-color: #f1c40f; /* Yellow */
+}
+
+/* Trash Activities */
+.activity-type-badge.trash_view,
+.activity-type-badge.viewed_trash {
+    background-color: #95a5a6; /* Gray */
+}
+
+/* Restore Activities */
+.activity-type-badge.file_restore {
+    background-color: #27ae60; /* Darker Green */
+}
+
+/* Permanent Delete Activities */
+.activity-type-badge.permanent_delete {
+    background-color: #c0392b; /* Dark Red */
+}
+
+/* Files Management Page Activities */
+.activity-type-badge.files_management_view {
+    background-color: #3498db; /* Blue */
+}
+
+/* Specific Activities */
+.activity-type-badge.viewed_all_files {
+    background-color: #1abc9c; /* Turquoise */
+}
+
+.activity-type-badge.shared_files_view {
+    background-color: #e67e22; /* Orange */
+}
+
+/* A catch-all for other view activities not specifically defined */
+.activity-type-badge[class*="view"]:not(.login):not(.logout):not(.file_upload):not(.file_download):not(.file_share):not(.file_delete):not(.user_create):not(.user_update):not(.user_delete):not(.page_view):not(.file_view):not(.trash_view):not(.files_management_view):not(.viewed_all_files):not(.shared_files_view) {
+    background-color: #9b59b6; /* Purple - for any other view activities */
+}
+/* Additional Activity Type Badges Styling */
+
+/* View My Files Activities */
+.activity-type-badge.my_files_view {
+    background-color: #16a085; /* Dark Turquoise */
+}
+
+/* Move to Trash Activities */
+.activity-type-badge.move_to_trash {
+    background-color: #7f8c8d; /* Asphalt Gray */
+}
+
+/* Login Verification Activities */
+.activity-type-badge.login_verification {
+    background-color: #8e44ad; /* Purple */
+}
+
+/* Favorites Activities */
+.activity-type-badge.favorite_remove {
+    background-color: #d35400; /* Pumpkin Orange */
+}
+
+.activity-type-badge.favorite_add {
+    background-color: #f1c40f; /* Yellow */
+}
+
+/* File Details View Activities */
+.activity-type-badge.file_details_view {
+    background-color: #2980b9; /* Deep Blue */
+}
+
+/* Page View Activities */
+.activity-type-badge.page_view {
+    background-color: #3498db; /* Blue */
+}
+
+/* File View Activities */
+.activity-type-badge.file_view {
+    background-color: #2ecc71; /* Green */
+}
+
+/* Favorites Activities */
+.activity-type-badge.favorite_add,
+.activity-type-badge.favorite_remove,
+.activity-type-badge.viewed_favorites {
+    background-color: #f1c40f; /* Yellow */
+}
+
+/* Trash Activities */
+.activity-type-badge.trash_view,
+.activity-type-badge.viewed_trash {
+    background-color: #95a5a6; /* Gray */
+}
+
+/* Restore Activities */
+.activity-type-badge.file_restore {
+    background-color: #27ae60; /* Darker Green */
+}
+
+/* Permanent Delete Activities */
+.activity-type-badge.permanent_delete {
+    background-color: #c0392b; /* Dark Red */
+}
+
+/* Files Management Page Activities */
+.activity-type-badge.files_management_view {
+    background-color: #3498db; /* Blue */
+}
+
+/* Specific Activities */
+.activity-type-badge.viewed_all_files {
+    background-color: #1abc9c; /* Turquoise */
+}
+
+.activity-type-badge.shared_files_view {
+    background-color: #e67e22; /* Orange */
+}
+
+/* A catch-all for other view activities not specifically defined */
+.activity-type-badge[class*="view"]:not(.login):not(.logout):not(.file_upload):not(.file_download):not(.file_share):not(.file_delete):not(.user_create):not(.user_update):not(.user_delete):not(.page_view):not(.file_view):not(.trash_view):not(.files_management_view):not(.viewed_all_files):not(.shared_files_view) {
+    background-color: #9b59b6; /* Purple - for any other view activities */
+}

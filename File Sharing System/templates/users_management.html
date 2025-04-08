@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Secure File Sharing System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='Photos/lOGO.png') }}" alt="Logo">
+                <span>SecureFile</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        <i class="fas fa-th-large nav-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.files') }}">
+                        <i class="fas fa-file-alt nav-icon"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{ url_for('admin.users') }}">
+                        <i class="fas fa-users nav-icon"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin.activities') }}">
+                        <i class="fas fa-history nav-icon"></i>
+                        <span>Activities</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="logout-section">
+                <a href="{{ url_for('logout') }}" class="btn danger" style="width: 100%;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Header with User Profile only (removed duplicate search and Add User) -->
+            <div class="header">
+                <!-- Removed duplicate search bar from here -->
+                
+                <div class="user-actions">
+                    <!-- Removed duplicate Add User button from here -->
+                    
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Management Section -->
+            <div class="users-section">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <div class="header-actions">
+                        <div class="search-bar">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="userSearchInput" placeholder="Search users...">
+                        </div>
+                        <select id="userFilterRole">
+                            <option value="all">All Roles</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                        <button id="addUserBtn" class="btn primary">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Add User</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersList">
+                            <!-- Users will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <h2 id="userModalTitle">Add New User</h2>
+            <form id="userForm">
+                <input type="hidden" id="userId" name="userId" value="">
+                
+                <div class="form-group">
+                    <label for="userName">Full Name:</label>
+                    <input type="text" id="userName" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userEmail">Email:</label>
+                    <input type="email" id="userEmail" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userDepartment">Department:</label>
+                    <select id="userDepartment" name="department" required>
+                        <!-- Will be populated by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userRole">Role:</label>
+                    <select id="userRole" name="role" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <div id="passwordFields">
+                    <div class="form-group">
+                        <label for="userPassword">Password:</label>
+                        <div class="password-input-container">
+                            <input type="password" id="userPassword" name="password" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userPasswordConfirm">Confirm Password:</label>
+                        <div class="password-input-container">
+                            <input type="password" id="userPasswordConfirm" name="passwordConfirm" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="userStatus" name="isActive" checked>
+                        <label class="form-check-label" for="userStatus">Active Account</label>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn secondary" id="cancelUserForm">Cancel</button>
+                    <button type="submit" class="btn primary" id="saveUserBtn">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete User Confirmation Modal -->
+    <div id="deleteUserModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete user <span id="deleteUserName"></span>?</p>
+            <div class="modal-actions">
+                <button class="btn secondary" id="cancelDeleteUser">Cancel</button>
+                <button class="btn danger" id="confirmDeleteUser">Delete User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button id="closeNotifications" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+        <div class="notification-footer">
+            <button id="markAllRead" class="btn secondary">Mark All as Read</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <p id="toastMessage"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+    <script src="{{ url_for('static', filename='users_management.js') }}"></script>
+</body>
+</html>
